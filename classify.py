@@ -11,6 +11,7 @@ import os.path
 import subprocess
 import sys
 
+# FIXME: Avoid hard dependency on tvdb
 import tvdb_api
 
 from stat import S_ISDIR, S_ISREG

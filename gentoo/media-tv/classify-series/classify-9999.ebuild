@@ -12,8 +12,11 @@ EGIT_REPO_URI="https://github.com/SonicFrog/classifier.git"
 SLOT="0"
 LICENSE="GPL-2.0"
 
+IUSE="subtitles tvdb"
+
 RDEPEND="dev-lang/python:2
-		 dev-python/tvdb_api"
+		 tvdb? (dev-python/tvdb_api)
+		 subtitles? (media-video/subdl)"
 
 DEPEND="${RDEPEND}"
 
