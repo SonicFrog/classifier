@@ -11,8 +11,12 @@ import os.path
 import subprocess
 import sys
 
-# FIXME: Avoid hard dependency on tvdb
-import tvdb_api
+try:
+    import tvdb_api
+    has_tvdb = True
+except ImportError:
+    print("TVDB API not detected! Not using TVDB.")
+    has_tvdb = False
 
 from stat import S_ISDIR, S_ISREG
 
@@ -152,6 +156,8 @@ if __name__ == '__main__':
                         help='specify whether to use the tvdb api')
     parser.add_argument('-s', '--sub', type=bool,
                         help='fetches subtitles for every episode')
+    parser.add_argument('-n', '--dry-run', type=bool,
+                        help="only shows what action would be performed")
 
     info("Starting up classify...")
 
@@ -167,7 +173,7 @@ if __name__ == '__main__':
 
     info("Done! Found %d episodes." % len(infos))
 
-    if args.tvdb:
+    if args.tvdb and has_tvdb:
         info("Fetching additionnal informations from TVDB...")
         ren = TVDBRenamer(infos, args.output)
         ren.process()
